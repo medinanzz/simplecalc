@@ -1,5 +1,6 @@
 // Calculator.tsx
 import { useState } from "react";
+import { DarkMode } from "./darkMode";
 
 type Operator = "+" | "-" | "*" | "/" | null;
 
@@ -61,10 +62,11 @@ export default function Calculator() {
   const expr = prev && operator ? `${prev} ${opSymbols[operator]}` : "";
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-8">
-      <div className="bg-white rounded-2xl border p-6 w-72 shadow-sm">
+    <div className="flex justify-center items-center min-h-screen p-8 dark:bg-[#333]">
+      <DarkMode />
+      <div className="bg-white rounded-2xl border p-6 w-72 dark:border-white dark:bg-[#333] shadow-[0_10px_25px_rgba(0,0,0,0.4)] dark:shadow-[0_10px_25px_rgba(255,255,255,0.05)]">
         {/* Display */}
-        <div className="bg-gray-100 rounded-xl p-4 mb-4 text-right min-h-18">
+        <div className="bg-gray-100 dark:bg-[#444444] dark:text-white rounded-xl p-4 mb-4 text-right min-h-18">
           <p className="text-gray-400 text-sm font-mono h-5">{expr}</p>
           <p className="text-3xl font-mono font-medium truncate">{cur}</p>
         </div>
@@ -104,16 +106,16 @@ type BtnProps = {
 
 function Btn({ onClick, children, variant = "num", className = "" }: BtnProps) {
   const styles: Record<string, string> = {
-    num: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-    op: "bg-blue-100 text-blue-700 hover:bg-blue-200",
-    eq: "bg-blue-600 text-white hover:bg-blue-700",
-    danger: "bg-red-100 text-red-700 hover:bg-red-200",
+    num: "bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-[#555] dark:text-white dark:hover:bg-[#666]",
+    op: "bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-[#444] dark:text-white dark:hover:bg-[#555]",
+    eq: "bg-blue-600 text-white hover:bg-blue-700 dark:bg-[#444] dark:text-white dark:hover:bg-[#555]",
+    danger: "bg-red-100 text-red-700 hover:bg-red-200 dark:bg-[#222] dark:text-white dark:hover:bg-[#555]",
   };
 
   return (
     <button
       onClick={onClick}
-      className={`h-14 rounded-xl font-medium text-base transition-transform active:scale-95 ${styles[variant]} ${className}`}
+      className={`h-14 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_0_10px_rgba(255,255,255,0.1)] transition-[.3s_transform,background-color] rounded-xl font-medium text-base active:scale-95 ${styles[variant]} ${className}`}
     >
       {children}
     </button>
