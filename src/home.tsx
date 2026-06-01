@@ -61,7 +61,7 @@ export default function Calculator() {
   const expr = prev && operator ? `${prev} ${opSymbols[operator]}` : "";
 
   return (
-    <div className="flex justify-center p-8">
+    <div className="flex justify-center items-center p-8">
       <div className="bg-white rounded-2xl border p-6 w-72 shadow-sm">
         {/* Display */}
         <div className="bg-gray-100 rounded-xl p-4 mb-4 text-right min-h-18">
