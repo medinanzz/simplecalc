@@ -1,8 +1,19 @@
 // Calculator.tsx
 import { useState } from "react";
 import { DarkMode } from "./darkMode";
+// import { Btn } from "./buttonsOp";
+import { ButtonsGroup } from "./buttonsGroup";
 
 type Operator = "+" | "-" | "*" | "/" | null;
+export type btnsStateProps = {
+  onNum: (d: string) => void;
+  onDot(): void;
+  onOp(op: Operator): void;
+  onEq(): void;
+  onAC(): void;
+  onSign(): void;
+  onPercent(): void;
+};
 
 export default function Calculator() {
   const [cur, setCur] = useState("0");
@@ -72,52 +83,25 @@ export default function Calculator() {
         </div>
 
         {/* Botões */}
-        <div className="grid grid-cols-4 gap-2">
-          <Btn onClick={handleAC} variant="danger">AC</Btn>
-          <Btn onClick={handleSign} variant="op">+/-</Btn>
-          <Btn onClick={handlePercent} variant="op">%</Btn>
-          <Btn onClick={() => handleOp("/")} variant="op">÷</Btn>
-
-          {["7","8","9"].map(n => <Btn key={n} onClick={() => handleNum(n)}>{n}</Btn>)}
-          <Btn onClick={() => handleOp("*")} variant="op">×</Btn>
-
-          {["4","5","6"].map(n => <Btn key={n} onClick={() => handleNum(n)}>{n}</Btn>)}
-          <Btn onClick={() => handleOp("-")} variant="op">−</Btn>
-
-          {["1","2","3"].map(n => <Btn key={n} onClick={() => handleNum(n)}>{n}</Btn>)}
-          <Btn onClick={() => handleOp("+")} variant="op">+</Btn>
-
-          <Btn onClick={() => handleNum("0")} className="col-span-2">0</Btn>
-          <Btn onClick={handleDot}>.</Btn>
-          <Btn onClick={handleEq} variant="eq">=</Btn>
-        </div>
+        <ButtonsGroup 
+          onNum={handleNum}
+          onDot={handleDot}
+          onOp={handleOp}
+          onEq={handleEq}
+          onAC={handleAC}
+          onSign={handleSign}
+          onPercent={handlePercent}
+        />
       </div>
     </div>
   );
 }
 
 // Componente auxiliar de botão
-type BtnProps = {
+export type BtnProps = {
   onClick: () => void;
   children: React.ReactNode;
   variant?: "num" | "op" | "eq" | "danger";
   className?: string;
 };
 
-function Btn({ onClick, children, variant = "num", className = "" }: BtnProps) {
-  const styles: Record<string, string> = {
-    num: "bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-[#555] dark:text-white dark:hover:bg-[#666]",
-    op: "bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-[#444] dark:text-white dark:hover:bg-[#555]",
-    eq: "bg-blue-600 text-white hover:bg-blue-700 dark:bg-[#444] dark:text-white dark:hover:bg-[#555]",
-    danger: "bg-red-100 text-red-700 hover:bg-red-200 dark:bg-[#222] dark:text-white dark:hover:bg-[#555]",
-  };
-
-  return (
-    <button
-      onClick={onClick}
-      className={`h-14 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_0_10px_rgba(255,255,255,0.1)] transition-[.3s_transform,background-color] rounded-xl font-medium text-base active:scale-95 ${styles[variant]} ${className}`}
-    >
-      {children}
-    </button>
-  );
-}
